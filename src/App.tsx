@@ -649,7 +649,7 @@ const Portfolio: React.FC = () => {
             <a
               // href="/Atharv_Pitrubhakta_Resume.pdf"
               // download="Atharv_Pitrubhakta_Resume.pdf"
-              href="/Atharv_Pitrubhakta_Resume.pdf"
+              href="/Atharv_7083351169.pdf" 
               target="_blank"
               rel="noopener noreferrer"
               className={`px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 inline-flex items-center gap-2 hover:scale-105 ${
