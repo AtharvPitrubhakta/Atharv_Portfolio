@@ -24,6 +24,7 @@ import {
   User,
   MessageSquare,
 } from "lucide-react";
+import emailjs from "@emailjs/browser";
 import StudyNotion from "./assets/StudyNotion.png";
 import ExpenseTracker from "./assets/ExpenseTracker.png";
 
@@ -41,12 +42,16 @@ const Portfolio: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // Include subject (was present in your vanilla HTML version)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    subject: "",
     message: "",
   });
-  const [formStatus, setFormStatus] = useState("");
+  const [formStatus, setFormStatus] = useState<
+    "" | "sending" | "success" | "error"
+  >("");
 
   // allow null on the RefObject generic
   const sectionRefs: Record<
@@ -66,7 +71,14 @@ const Portfolio: React.FC = () => {
     Partial<Record<SectionName, boolean>>
   >({});
 
+  // formRef to attach to the contact form
+  const formRef = useRef<HTMLFormElement | null>(null);
+
   useEffect(() => {
+    // Initialize EmailJS with your public key
+    // ⚠️ If you prefer, move this key to an env var (VITE_...) for production
+    emailjs.init("hFpUAq4gr4amVCelH");
+
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
 
@@ -145,6 +157,22 @@ const Portfolio: React.FC = () => {
       icon: <MessageSquare className="w-4 h-4" />,
     },
   ];
+
+  const roles = [
+    "MERN Stack Developer",
+    "Full Stack Developer",
+    "Frontend Developer",
+    "Backend Developer",
+  ];
+
+  const [currentRole, setCurrentRole] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentRole((prev) => (prev + 1) % roles.length);
+    }, 2500); // change every 2.5 seconds
+    return () => clearInterval(interval);
+  }, []);
 
   // const skillCategories = [
   //   {
@@ -239,35 +267,13 @@ const Portfolio: React.FC = () => {
   ];
 
   const projects = [
-    // {
-    //   title: "E-Commerce Platform",
-    //   description:
-    //     "Full-stack MERN application with payment integration, JWT authentication, admin dashboard, and real-time inventory management.",
-    //   image:
-    //     "https://images.unsplash.com/photo-1557821552-17105176677c?w=800&h=500&fit=crop",
-    //   tech: ["React", "Node.js", "MongoDB", "Stripe", "Redux"],
-    //   github: "#",
-    //   live: "#",
-    //   featured: true,
-    // },
-    // {
-    //   title: "Task Management System",
-    //   description:
-    //     "Real-time collaborative task manager with drag-and-drop, team features, notifications, and productivity analytics.",
-    //   image:
-    //     "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=500&fit=crop",
-    //   tech: ["React", "Express", "Socket.io", "PostgreSQL"],
-    //   github: "#",
-    //   live: "#",
-    //   featured: true,
-    // },
     {
       title: "Study Notion (Ed-Tech Platform)",
       description:
         "A full-stack MERN Ed-Tech app with role-based authentication, course management, and secure payments via Razorpay.",
       image: StudyNotion,
       tech: ["React", "Node.js", "MongoDB", "JWT", "Redux", "Razorpay"],
-      github: "https://github.com/StudyNotion",
+      github: "https://github.com/AtharvPitrubhakta/StudyNotion",
       live: "#",
       featured: true,
     },
@@ -277,18 +283,18 @@ const Portfolio: React.FC = () => {
         "A MERN-based app for managing personal finances with CRUD operations, filtering, and data visualization.",
       image: ExpenseTracker,
       tech: ["React", "Node.js", "MongoDB", "JWT", "Redux"],
-      github: "https://github.com/Expense-Tracker",
+      github: "https://github.com/AtharvPitrubhakta/Expense-Tracker",
       live: "#",
       featured: false,
     },
     {
-      title: "Social Media Dashboard",
+      title: "Transaction Dashboard",
       description:
-        "Analytics dashboard with data visualization, RESTful API integration, multi-platform support, and custom reporting.",
+        "Transaction Dashboard is a website that allows users to efficiently manage and analyze their financial transactions through a user-friendly interface.",
       image:
         "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop",
       tech: ["React", "Node.js", "Chart.js", "Tailwind"],
-      github: "#",
+      github: "https://github.com/AtharvPitrubhakta/Transaction_Dashboard",
       live: "#",
       featured: false,
     },
@@ -326,7 +332,7 @@ const Portfolio: React.FC = () => {
       featured: false,
     },
   ];
- 
+
   const experience = [
     {
       role: "Software Development Engineer I",
@@ -362,15 +368,34 @@ const Portfolio: React.FC = () => {
     "Training on Core JAVA - Aspiring Careers",
   ];
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // basic validation can be added here
     setFormStatus("sending");
 
-    setTimeout(() => {
+    const templateParams = {
+      from_name: formData.name,
+      from_email: formData.email,
+      subject: formData.subject || "Portfolio Contact",
+      message: formData.message,
+    };
+
+    try {
+      // use same service/template ids you used in app.js
+      const serviceId = "service_wucj1fn";
+      const templateId = "template_6uayn4g";
+      const result = await emailjs.send(serviceId, templateId, templateParams);
+      // success
       setFormStatus("success");
-      setFormData({ name: "", email: "", message: "" });
+      setFormData({ name: "", email: "", subject: "", message: "" });
+      // clear success after delay
       setTimeout(() => setFormStatus(""), 3000);
-    }, 1500);
+      console.log("EmailJS success:", result);
+    } catch (err) {
+      console.error("EmailJS error:", err);
+      setFormStatus("error");
+      setTimeout(() => setFormStatus(""), 3000);
+    }
   };
 
   const handleInputChange = (
@@ -534,9 +559,12 @@ const Portfolio: React.FC = () => {
             </span>
           </h1>
 
-          <div className="text-2xl md:text-3xl mb-6 font-semibold">
-            <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-              MERN Stack Developer
+          <div className="text-2xl md:text-3xl mb-6 font-semibold h-8 md:h-10 flex justify-center items-center">
+            <span
+              key={roles[currentRole]} // triggers animation on change
+              className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent transition-opacity duration-700 ease-in-out animate-fadeIn"
+            >
+              {roles[currentRole]}
             </span>
           </div>
 
@@ -616,10 +644,14 @@ const Portfolio: React.FC = () => {
               className="group bg-gradient-to-r from-blue-500 to-purple-500 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-2xl hover:shadow-blue-500/50 transition-all duration-300 inline-flex items-center gap-2 hover:scale-105"
             >
               View Projects
-              <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <ChevronRight className="w-5 h-5 group-hover:translate-x-1  transition-transform" />
             </button>
-            <button
-              onClick={() => scrollToSection("contact")}
+            <a
+              // href="/Atharv_Pitrubhakta_Resume.pdf"
+              // download="Atharv_Pitrubhakta_Resume.pdf"
+              href="/Atharv_Pitrubhakta_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
               className={`px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 inline-flex items-center gap-2 hover:scale-105 ${
                 darkMode
                   ? "bg-gray-800 hover:bg-gray-700 border-2 border-gray-700"
@@ -628,7 +660,7 @@ const Portfolio: React.FC = () => {
             >
               <Download className="w-5 h-5" />
               Download CV
-            </button>
+            </a>
           </div>
         </div>
       </section>
@@ -1214,7 +1246,7 @@ const Portfolio: React.FC = () => {
             </div>
 
             {/* Contact Form */}
-            <div
+            {/* <div
               className={`p-8 rounded-xl ${
                 darkMode ? "bg-gray-900/50" : "bg-white"
               } shadow-xl`}
@@ -1293,6 +1325,123 @@ const Portfolio: React.FC = () => {
                     <>
                       <Award className="w-5 h-5" />
                       Message Sent!
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-5 h-5" />
+                      Send Message
+                    </>
+                  )}
+                </button>
+              </form>
+            </div> */}
+            {/* Contact Form */}
+            <div
+              className={`p-8 rounded-xl ${
+                darkMode ? "bg-gray-900/50" : "bg-white"
+              } shadow-xl`}
+            >
+              <form
+                ref={formRef}
+                onSubmit={handleFormSubmit}
+                className="space-y-6"
+              >
+                <div>
+                  <label className="block text-sm font-medium mb-2">Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                    className={`w-full px-4 py-3 rounded-lg transition-all duration-300 focus:ring-2 focus:ring-blue-500 ${
+                      darkMode
+                        ? "bg-gray-800 border border-gray-700 text-white"
+                        : "bg-gray-50 border border-gray-300 text-gray-900"
+                    }`}
+                    placeholder="Your Name"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                    className={`w-full px-4 py-3 rounded-lg transition-all duration-300 focus:ring-2 focus:ring-blue-500 ${
+                      darkMode
+                        ? "bg-gray-800 border border-gray-700 text-white"
+                        : "bg-gray-50 border border-gray-300 text-gray-900"
+                    }`}
+                    placeholder="your.email@example.com"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    Subject
+                  </label>
+                  <input
+                    type="text"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleInputChange}
+                    required
+                    className={`w-full px-4 py-3 rounded-lg transition-all duration-300 focus:ring-2 focus:ring-blue-500 ${
+                      darkMode
+                        ? "bg-gray-800 border border-gray-700 text-white"
+                        : "bg-gray-50 border border-gray-300 text-gray-900"
+                    }`}
+                    placeholder="Subject"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    Message
+                  </label>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    required
+                    rows={5}
+                    className={`w-full px-4 py-3 rounded-lg transition-all duration-300 focus:ring-2 focus:ring-blue-500 resize-none ${
+                      darkMode
+                        ? "bg-gray-800 border border-gray-700 text-white"
+                        : "bg-gray-50 border border-gray-300 text-gray-900"
+                    }`}
+                    placeholder="Tell me about your project..."
+                  ></textarea>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={formStatus === "sending"}
+                  className={`w-full py-4 rounded-lg font-semibold text-white transition-all duration-300 flex items-center justify-center gap-2 ${
+                    formStatus === "sending"
+                      ? "bg-gray-500 cursor-not-allowed"
+                      : "bg-gradient-to-r from-blue-500 to-purple-500 hover:shadow-lg hover:shadow-blue-500/50 hover:scale-105"
+                  }`}
+                >
+                  {formStatus === "sending" ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Sending...
+                    </>
+                  ) : formStatus === "success" ? (
+                    <>
+                      <Award className="w-5 h-5" />
+                      Message Sent!
+                    </>
+                  ) : formStatus === "error" ? (
+                    <>
+                      <span>Failed — try again</span>
                     </>
                   ) : (
                     <>
@@ -1470,6 +1619,22 @@ const Portfolio: React.FC = () => {
           -webkit-box-orient: vertical;
           overflow: hidden;
         }
+
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-fadeIn {
+          animation: fadeIn 0.6s ease-in-out;
+        }
+
       `}</style>
     </div>
   );
