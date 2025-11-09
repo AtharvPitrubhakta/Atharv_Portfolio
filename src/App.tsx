@@ -249,6 +249,8 @@ const Portfolio: React.FC = () => {
         { name: "PostgreSQL", icon: <Database className="w-5 h-5" /> },
         { name: "REST APIs", icon: <Server className="w-5 h-5" /> },
         { name: "JWT Auth", icon: <Server className="w-5 h-5" /> },
+        { name: "FAST API", icon: <Server className="w-5 h-5" /> },
+        { name: "FLASK API", icon: <Server className="w-5 h-5" /> },
       ],
     },
     {
@@ -257,10 +259,12 @@ const Portfolio: React.FC = () => {
       color: "from-purple-500 to-pink-500",
       skills: [
         { name: "Git & GitHub", icon: <Github className="w-5 h-5" /> },
+        { name: "VS Code", icon: <Code2 className="w-5 h-5" /> },
         { name: "Postman", icon: <Server className="w-5 h-5" /> },
         { name: "AWS", icon: <Server className="w-5 h-5" /> },
         { name: "Firebase", icon: <Database className="w-5 h-5" /> },
         { name: "Vercel", icon: <Server className="w-5 h-5" /> },
+        { name: "Render", icon: <Server className="w-5 h-5" /> },
         { name: "Figma", icon: <Palette className="w-5 h-5" /> },
       ],
     },
@@ -649,7 +653,7 @@ const Portfolio: React.FC = () => {
             <a
               // href="/Atharv_Pitrubhakta_Resume.pdf"
               // download="Atharv_Pitrubhakta_Resume.pdf"
-              href="/Atharv_7083351169.pdf" 
+              href="/Atharv_7083351169.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className={`px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 inline-flex items-center gap-2 hover:scale-105 ${
