@@ -77,7 +77,8 @@ const Portfolio: React.FC = () => {
   useEffect(() => {
     // Initialize EmailJS with your public key
     // ⚠️ If you prefer, move this key to an env var (VITE_...) for production
-    emailjs.init("hFpUAq4gr4amVCelH");
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+    if (publicKey) emailjs.init(publicKey);
 
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
@@ -159,10 +160,10 @@ const Portfolio: React.FC = () => {
   ];
 
   const roles = [
-    "MERN Stack Developer",
     "Full Stack Developer",
-    "Frontend Developer",
-    "Backend Developer",
+    "AI & Cloud Application Developer",
+    "React.js & Node.js Developer",
+    "Backend & API Developer",
   ];
 
   const [currentRole, setCurrentRole] = useState(0);
@@ -182,6 +183,7 @@ const Portfolio: React.FC = () => {
   //     skills: [
   //       { name: "React.js", icon: <Code2 className="w-5 h-5" /> },
   //       { name: "Next.js", icon: <Code2 className="w-5 h-5" /> },
+        { name: "Nest.js", icon: <Code2 className="w-5 h-5" /> },
   //       { name: "JavaScript", icon: <Code2 className="w-5 h-5" /> },
   //       { name: "TypeScript", icon: <Code2 className="w-5 h-5" /> },
   //       { name: "HTML5 & CSS3", icon: <Palette className="w-5 h-5" /> },
@@ -249,8 +251,12 @@ const Portfolio: React.FC = () => {
         { name: "PostgreSQL", icon: <Database className="w-5 h-5" /> },
         { name: "REST APIs", icon: <Server className="w-5 h-5" /> },
         { name: "JWT Auth", icon: <Server className="w-5 h-5" /> },
-        { name: "FAST API", icon: <Server className="w-5 h-5" /> },
-        { name: "FLASK API", icon: <Server className="w-5 h-5" /> },
+        { name: "Nest.js", icon: <Server className="w-5 h-5" /> },
+        { name: "Spring Boot", icon: <Server className="w-5 h-5" /> },
+        { name: "Core Java", icon: <Code2 className="w-5 h-5" /> },
+        { name: "Microservices", icon: <Server className="w-5 h-5" /> },
+        { name: "Celery & Redis", icon: <Server className="w-5 h-5" /> },
+        { name: "WebSockets", icon: <Server className="w-5 h-5" /> },
       ],
     },
     {
@@ -261,116 +267,187 @@ const Portfolio: React.FC = () => {
         { name: "Git & GitHub", icon: <Github className="w-5 h-5" /> },
         { name: "VS Code", icon: <Code2 className="w-5 h-5" /> },
         { name: "Postman", icon: <Server className="w-5 h-5" /> },
-        { name: "AWS", icon: <Server className="w-5 h-5" /> },
+        { name: "AWS (EC2, S3, RDS)", icon: <Server className="w-5 h-5" /> },
+        { name: "CloudFront, IAM & VPC", icon: <Server className="w-5 h-5" /> },
+        { name: "Docker", icon: <Server className="w-5 h-5" /> },
+        { name: "GitHub Actions CI/CD", icon: <Code2 className="w-5 h-5" /> },
+        { name: "Supabase", icon: <Database className="w-5 h-5" /> },
         { name: "Firebase", icon: <Database className="w-5 h-5" /> },
-        { name: "Vercel", icon: <Server className="w-5 h-5" /> },
-        { name: "Render", icon: <Server className="w-5 h-5" /> },
-        { name: "Figma", icon: <Palette className="w-5 h-5" /> },
       ],
     },
   ];
 
   const projects = [
     {
-      title: "Study Notion (Ed-Tech Platform)",
+      title: "IAMyHealth — Digital Twin Platform",
       description:
-        "A full-stack MERN Ed-Tech app with role-based authentication, course management, and secure payments via Razorpay.",
+        "A digital twin platform for medical experts and diagnosis, built with a React and Nest.js application stack.",
+      image:
+        "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=500&fit=crop",
+      tech: ["React.js", "Nest.js", "PostgreSQL", "AWS Bedrock", "AWS ECR"],
+      github: "",
+      live: "",
+      featured: true,
+      caseStudy: [
+        { label: "Product scope", detail: "Digital twin platform supporting medical experts and diagnosis workflows." },
+        { label: "Contribution", detail: "Developed and integrated frontend/backend modules and REST APIs; troubleshot application and integration issues." },
+        { label: "AI & cloud", detail: "Contributed to AWS Bedrock setup, AI service integration, and AWS ECR deployment-related integrations." },
+      ],
+    },
+    {
+      title: "Artfledge — Online Art Marketplace",
+      description:
+        "An online art collection and marketplace platform with AI-enabled capabilities and marketplace payment workflows.",
+      image:
+        "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&h=500&fit=crop",
+      tech: ["React.js", "Node.js", "Google Cloud Vertex AI", "PayPal Marketplace"],
+      github: "",
+      live: "",
+      featured: true,
+      caseStudy: [
+        { label: "Product scope", detail: "Online art collection and marketplace experience for artists and collectors." },
+        { label: "Contribution", detail: "Worked across frontend features, backend integrations, API workflows, debugging, and application optimization." },
+        { label: "Integrations", detail: "Implemented Google Cloud Vertex AI capabilities and PayPal Marketplace payout workflows." },
+      ],
+    },
+    {
+      title: "EStore — Instant Delivery & E-Commerce",
+      description:
+        "An e-commerce and instant-delivery platform with payment integration, real-time delivery updates, and cloud deployment workflows.",
+      image:
+        "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=500&fit=crop",
+      tech: ["Node.js", "PhonePe", "WebSockets", "AWS EC2", "AWS S3", "GitHub Actions"],
+      github: "",
+      live: "",
+      featured: true,
+      caseStudy: [
+        { label: "Architecture", detail: "Worked on system architecture, data models, service boundaries, and asynchronous workflows." },
+        { label: "Payments & delivery", detail: "Integrated the PhonePe payment gateway and built a dedicated employee/delivery-partner app with WebSocket order updates and location tracking." },
+        { label: "Delivery pipeline", detail: "Managed CI/CD with GitHub Actions, AWS EC2 deployment, S3 static hosting, and DNS configuration." },
+      ],
+    },
+    {
+      title: "Nativbyte — AI Chatbot & SVG Editor",
+      description:
+        "Two product areas: an agentic AI chatbot for context-based question answering and a browser-based SVG vector editing tool.",
+      image:
+        "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=500&fit=crop",
+      tech: ["React.js", "Node.js", "Fabric.js", "Material UI", "AI integrations"],
+      github: "",
+      live: "",
+      featured: true,
+      caseStudy: [
+        { label: "AI chatbot", detail: "Developed frontend functionality for document, URL, and video inputs to support context-based question answering." },
+        { label: "SVG editor", detail: "Built vector-editing functionality using React.js, Fabric.js canvas tools, and Material UI components." },
+        { label: "Role", detail: "Software Developer at Nativbyte, October 2024–March 2025." },
+      ],
+    },
+    {
+      title: "School Management System",
+      description:
+        "A school management system supporting academic workflows for students, teachers, and administrators.",
+      image:
+        "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&h=500&fit=crop",
+      tech: ["Web Development", "Role-based dashboards", "Academic workflows"],
+      github: "",
+      live: "",
+      featured: false,
+      caseStudy: [
+        { label: "Contribution", detail: "Contributed to a school management system during the Software Developer Internship at SunRayz Technologies." },
+        { label: "Workflows", detail: "Supported homework and assignment management, student progress tracking, and teacher–student collaboration." },
+      ],
+    },
+    {
+      title: "Study Notion — Ed-Tech Platform",
+      description:
+        "A MERN-based education application with role-based authentication, course management, and Razorpay payment integration.",
       image: StudyNotion,
       tech: ["React", "Node.js", "MongoDB", "JWT", "Redux", "Razorpay"],
       github: "https://github.com/AtharvPitrubhakta/StudyNotion",
-      live: "#",
-      featured: true,
+      live: "",
+      featured: false,
+      caseStudy: [
+        { label: "Scope", detail: "Course management and role-based user experiences in a full-stack MERN application." },
+        { label: "Integrations", detail: "Authentication with JWT and payment workflows using Razorpay." },
+      ],
     },
     {
       title: "Expense Tracker App",
       description:
-        "A MERN-based app for managing personal finances with CRUD operations, filtering, and data visualization.",
+        "A MERN application for managing personal finances with CRUD operations, filtering, and data visualization.",
       image: ExpenseTracker,
       tech: ["React", "Node.js", "MongoDB", "JWT", "Redux"],
       github: "https://github.com/AtharvPitrubhakta/Expense-Tracker",
-      live: "#",
+      live: "",
       featured: false,
+      caseStudy: [
+        { label: "Scope", detail: "Personal-finance tracking with CRUD workflows, filtering, and visual summaries." },
+        { label: "Stack", detail: "React, Node.js, MongoDB, JWT, and Redux." },
+      ],
     },
     {
       title: "Transaction Dashboard",
       description:
-        "Transaction Dashboard is a website that allows users to efficiently manage and analyze their financial transactions through a user-friendly interface.",
+        "A dashboard for managing and reviewing financial transactions through a user-friendly interface.",
       image:
         "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop",
-      tech: ["React", "Node.js", "Chart.js", "Tailwind"],
+      tech: ["React", "Node.js", "Chart.js", "Tailwind CSS"],
       github: "https://github.com/AtharvPitrubhakta/Transaction_Dashboard",
-      live: "#",
+      live: "",
       featured: false,
-    },
-    {
-      title: "AI Content Generator",
-      description:
-        "AI-powered content creation tool with OpenAI integration, template library, and export functionality.",
-      image:
-        "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=500&fit=crop",
-      tech: ["Next.js", "OpenAI", "MongoDB", "TypeScript"],
-      github: "#",
-      live: "#",
-      featured: true,
-    },
-    {
-      title: "Real Estate Platform",
-      description:
-        "Property listing platform with advanced search filters, virtual tours, and agent dashboard.",
-      image:
-        "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=500&fit=crop",
-      tech: ["React", "Firebase", "Google Maps", "Material-UI"],
-      github: "#",
-      live: "#",
-      featured: false,
-    },
-    {
-      title: "Fitness Tracker App",
-      description:
-        "Health and fitness tracking application with workout plans, progress charts, and nutrition logging. Built backend API’s and integrations to connect the chatbot interface with the underlying NLP model.",
-      image:
-        "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&h=500&fit=crop",
-      tech: ["React Native", "Node.js", "MongoDB", "Redux"],
-      github: "#",
-      live: "#",
-      featured: false,
+      caseStudy: [
+        { label: "Scope", detail: "A transaction dashboard focused on presenting financial records and summaries." },
+        { label: "Stack", detail: "React, Node.js, Chart.js, and Tailwind CSS." },
+      ],
     },
   ];
 
+
   const experience = [
     {
-      role: "Software Development Engineer I",
-      company: "Nativbyte – Pune, IN",
+      role: "Full Stack Developer",
+      company: "Innovit Labs",
+      location: "Pune, India",
+      period: "June 2025 – Present",
+      description:
+        "Build and maintain full-stack applications using React.js, Node.js, Nest.js, PostgreSQL, and REST APIs.",
+      achievements: [
+        "Contribute to technical design, API development, performance optimization, debugging, and cloud deployment.",
+        "Collaborate with teams to turn requirements into reliable application features.",
+        "Participate in code reviews and support junior developers through technical discussions and knowledge sharing.",
+      ],
+    },
+    {
+      role: "Software Developer",
+      company: "Nativbyte Pvt Ltd",
       location: "Pune, India",
       period: "Oct 2024 – Mar 2025",
       description:
-        "Developed an AI-powered chatbot platform with React, Node.js, and secure LLM integrations. Built REST APIs and UI features supporting document, URL, and video-based question answering.",
+        "Developed frontend functionality for an agentic AI chatbot and an SVG vector editing tool.",
       achievements: [
-        "Created reusable React UI components",
-        "Integrated chatbot with AI/ML services",
-        "Enhanced app responsiveness and accessibility",
+        "Built chatbot features for document, URL, and video inputs to support context-based question answering.",
+        "Developed SVG editing functionality with React.js, Fabric.js, and Material UI.",
       ],
     },
     {
       role: "Software Developer Intern",
-      company: "SunRayz Technology – Pune, IN",
+      company: "SunRayz Technologies",
       location: "Pune, India",
       period: "Nov 2023 – Apr 2024",
       description:
-        "Built a school management system enabling teachers, students, and admins to manage assignments, track progress, and communicate seamlessly.",
+        "Contributed to a school management system for students, teachers, and administrators.",
       achievements: [
-        "Developed multiple role-based dashboards",
-        "Improved UI/UX for key academic modules",
+        "Supported homework and assignment management, student progress tracking, and teacher–student collaboration.",
+        "Contributed to role-based web application workflows.",
       ],
     },
   ];
 
   const certifications = [
-    "Web Development Bootcamp (MERN Stack) - CODEHELP",
-    "MERN Stack Development - Giri's Tech Hub",
-    "Basic to Advanced Structured Query - Skill Nation",
-    "Training on Core JAVA - Aspiring Careers",
+    "AWS Cloud Application Developer — Vinsys & Generation India",
+    "AI-900: Microsoft Azure AI Fundamentals — Microsoft",
   ];
+
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -386,9 +463,13 @@ const Portfolio: React.FC = () => {
 
     try {
       // use same service/template ids you used in app.js
-      const serviceId = "service_wucj1fn";
-      const templateId = "template_6uayn4g";
-      const result = await emailjs.send(serviceId, templateId, templateParams);
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+      if (!serviceId || !templateId || !publicKey) {
+        throw new Error("EmailJS environment variables are not configured.");
+      }
+      const result = await emailjs.send(serviceId, templateId, templateParams, publicKey);
       // success
       setFormStatus("success");
       setFormData({ name: "", email: "", subject: "", message: "" });
@@ -577,69 +658,22 @@ const Portfolio: React.FC = () => {
               darkMode ? "text-gray-300" : "text-gray-700"
             }`}
           >
-            Passionate about crafting elegant solutions to complex problems. I
-            specialize in building
-            <span className="font-semibold text-blue-500">
-              {" "}
-              scalable web applications
-            </span>{" "}
-            with
-            <span className="font-semibold text-purple-500">
-              {" "}
-              modern technologies
-            </span>{" "}
-            and
-            <span className="font-semibold text-pink-500">
-              {" "}
-              beautiful user interfaces
-            </span>
-            . With around 1 years of experience, I turn ideas into reality
-            through clean code and creative design.
+            Full Stack Developer with nearly 2 years of experience building web
+            applications and REST APIs with React.js, Node.js, Nest.js, and
+            PostgreSQL. I work across frontend and backend development, AI
+            integrations, cloud infrastructure, and CI/CD to deliver reliable
+            product features.
           </p>
 
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
-            <div
-              className={`px-6 py-3 rounded-full ${
-                darkMode ? "bg-gray-800" : "bg-white"
-              } shadow-lg`}
-            >
-              <span className="text-blue-500 font-bold text-xl">15+</span>
+          <div className="flex flex-wrap justify-center gap-3 mb-8" aria-label="Professional focus">
+            {["Full-stack development", "AI integrations", "Cloud & CI/CD"].map((focus) => (
               <span
-                className={`ml-2 ${
-                  darkMode ? "text-gray-400" : "text-gray-600"
-                }`}
+                key={focus}
+                className={`px-4 py-2 rounded-full text-sm font-medium border ${darkMode ? "border-gray-700 bg-gray-800 text-gray-300" : "border-gray-200 bg-white text-gray-700"}`}
               >
-                Projects
+                {focus}
               </span>
-            </div>
-            <div
-              className={`px-6 py-3 rounded-full ${
-                darkMode ? "bg-gray-800" : "bg-white"
-              } shadow-lg`}
-            >
-              <span className="text-purple-500 font-bold text-xl">1+</span>
-              <span
-                className={`ml-2 ${
-                  darkMode ? "text-gray-400" : "text-gray-600"
-                }`}
-              >
-                Years Exp
-              </span>
-            </div>
-            <div
-              className={`px-6 py-3 rounded-full ${
-                darkMode ? "bg-gray-800" : "bg-white"
-              } shadow-lg`}
-            >
-              <span className="text-pink-500 font-bold text-xl">50+</span>
-              <span
-                className={`ml-2 ${
-                  darkMode ? "text-gray-400" : "text-gray-600"
-                }`}
-              >
-                Happy Clients
-              </span>
-            </div>
+            ))}
           </div>
 
           <div className="flex flex-wrap justify-center gap-4">
@@ -650,21 +684,13 @@ const Portfolio: React.FC = () => {
               View Projects
               <ChevronRight className="w-5 h-5 group-hover:translate-x-1  transition-transform" />
             </button>
-            <a
-              // href="/Atharv_Pitrubhakta_Resume.pdf"
-              // download="Atharv_Pitrubhakta_Resume.pdf"
-              href="/Atharv_7083351169.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 inline-flex items-center gap-2 hover:scale-105 ${
-                darkMode
-                  ? "bg-gray-800 hover:bg-gray-700 border-2 border-gray-700"
-                  : "bg-white hover:bg-gray-50 border-2 border-gray-300"
-              }`}
+            <button
+              onClick={() => scrollToSection("contact")}
+              className={`px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 inline-flex items-center gap-2 hover:scale-105 ${darkMode ? "bg-gray-800 hover:bg-gray-700 border-2 border-gray-700" : "bg-white hover:bg-gray-50 border-2 border-gray-300"}`}
             >
-              <Download className="w-5 h-5" />
-              Download CV
-            </a>
+              <Mail className="w-5 h-5" />
+              Contact Me
+            </button>
           </div>
         </div>
       </section>
@@ -921,7 +947,7 @@ const Portfolio: React.FC = () => {
                   <GraduationCap className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-2xl font-bold mb-2">
-                  Bachelor of Technology
+                  Bachelor of Engineering (B.E.)
                 </h3>
                 <p className="text-xl text-blue-500 mb-2">
                   Computer Science & Engineering
@@ -940,17 +966,7 @@ const Portfolio: React.FC = () => {
                   >
                     Duration:
                   </span>
-                  <span className="font-semibold">2021 - 2024</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span
-                    className={darkMode ? "text-gray-400" : "text-gray-600"}
-                  >
-                    CGPA:
-                  </span>
-                  <span className="font-semibold text-green-500">
-                    8.32 / 10
-                  </span>
+                  <span className="font-semibold">2024</span>
                 </div>
                 <div
                   className={`pt-3 border-t ${
@@ -1055,7 +1071,7 @@ const Portfolio: React.FC = () => {
                 <div className="relative overflow-hidden h-56">
                   <img
                     src={project.image}
-                    alt={project.title}
+                    alt={`${project.title} project preview`}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
@@ -1093,22 +1109,46 @@ const Portfolio: React.FC = () => {
                     ))}
                   </div>
 
-                  <div className="flex gap-4">
-                    <a
-                      href={project.github}
-                      className="flex items-center gap-2 text-blue-500 hover:text-blue-600 transition-colors group/link"
-                    >
-                      <Github className="w-5 h-5 group-hover/link:scale-110 transition-transform" />
-                      <span className="font-medium">Code</span>
-                    </a>
-                    <a
-                      href={project.live}
-                      className="flex items-center gap-2 text-purple-500 hover:text-purple-600 transition-colors group/link"
-                    >
-                      <ExternalLink className="w-5 h-5 group-hover/link:scale-110 transition-transform" />
-                      <span className="font-medium">Live Demo</span>
-                    </a>
+                  <div className="space-y-3 mb-5">
+                    {project.caseStudy.map((item) => (
+                      <div key={item.label}>
+                        <p className="text-sm font-semibold text-blue-500 mb-1">{item.label}</p>
+                        <p className={`text-sm leading-relaxed ${darkMode ? "text-gray-400" : "text-gray-600"}`}>{item.detail}</p>
+                      </div>
+                    ))}
                   </div>
+
+                  {(project.github && project.github !== "#") || (project.live && project.live !== "#") ? (
+                    <div className="flex flex-wrap gap-4">
+                      {project.github && project.github !== "#" && (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 text-blue-500 hover:text-blue-600 transition-colors group/link"
+                        >
+                          <Github className="w-5 h-5 group-hover/link:scale-110 transition-transform" />
+                          <span className="font-medium">Source repository</span>
+                          <ExternalLink className="w-4 h-4" />
+                        </a>
+                      )}
+                      {project.live && project.live !== "#" && (
+                        <a
+                          href={project.live}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 text-purple-500 hover:text-purple-600 transition-colors group/link"
+                        >
+                          <ExternalLink className="w-5 h-5 group-hover/link:scale-110 transition-transform" />
+                          <span className="font-medium">Live demo</span>
+                        </a>
+                      )}
+                    </div>
+                  ) : (
+                    <p className={`text-xs italic ${darkMode ? "text-gray-500" : "text-gray-500"}`}>
+                      Proprietary work · Case study only
+                    </p>
+                  )}
                 </div>
               </div>
             ))}
@@ -1178,7 +1218,7 @@ const Portfolio: React.FC = () => {
                   <div>
                     <h3 className="font-semibold mb-1">Email</h3>
                     <a
-                      href="mailto:atharv@example.com"
+                      href="mailto:atharvpitrubhakta@gmail.com"
                       className="text-blue-500 hover:text-blue-600 transition-colors"
                     >
                       atharvpitrubhakta@gmail.com
@@ -1199,7 +1239,7 @@ const Portfolio: React.FC = () => {
                   <div>
                     <h3 className="font-semibold mb-1">Phone</h3>
                     <a
-                      href="tel:+919876543210"
+                      href="tel:+917083351169"
                       className="text-purple-500 hover:text-purple-600 transition-colors"
                     >
                       +91 70833 51169
