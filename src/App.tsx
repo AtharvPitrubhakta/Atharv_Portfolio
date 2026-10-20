@@ -76,7 +76,7 @@ const Portfolio: React.FC = () => {
 
   useEffect(() => {
     // Initialize EmailJS with your public key
-    // ⚠️ If you prefer, move this key to an env var (VITE_...) for production
+    // EmailJS identifiers are configured via Vite environment variables.
     const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
     if (publicKey) emailjs.init(publicKey);
 
@@ -528,12 +528,14 @@ const Portfolio: React.FC = () => {
       >
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
-            <div
+            <button
+              type="button"
+              aria-label="Go to portfolio home"
               className="text-2xl font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-gradient cursor-pointer"
               onClick={() => scrollToSection("summary")}
             >
               Atharv.dev
-            </div>
+            </button>
 
             <div className="hidden md:flex items-center space-x-1">
               {navItems.map((item) => (
@@ -556,6 +558,8 @@ const Portfolio: React.FC = () => {
 
             <div className="flex items-center gap-3">
               <button
+                type="button"
+                aria-label={darkMode ? "Switch to light theme" : "Switch to dark theme"}
                 onClick={() => setDarkMode(!darkMode)}
                 className={`p-2 rounded-lg transition-all duration-300 ${
                   darkMode
@@ -571,6 +575,9 @@ const Portfolio: React.FC = () => {
               </button>
 
               <button
+                type="button"
+                aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+                aria-expanded={mobileMenuOpen}
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className={`md:hidden p-2 rounded-lg ${
                   darkMode ? "bg-gray-800" : "bg-gray-200"
