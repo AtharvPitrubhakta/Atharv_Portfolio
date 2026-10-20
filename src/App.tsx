@@ -173,7 +173,7 @@ const Portfolio: React.FC = () => {
       setCurrentRole((prev) => (prev + 1) % roles.length);
     }, 2500); // change every 2.5 seconds
     return () => clearInterval(interval);
-  }, []);
+  }, [roles.length]);
 
   // const skillCategories = [
   //   {
@@ -973,6 +973,10 @@ const Portfolio: React.FC = () => {
                   >
                     Duration:
                   </span>
+                  <span className="font-semibold">2024</span>
+                </div>
+                <div className="flex justify-between items-center mb-3">
+                  <span className={darkMode ? "text-gray-400" : "text-gray-600"}>Graduated</span>
                   <span className="font-semibold">2024</span>
                 </div>
                 <div
