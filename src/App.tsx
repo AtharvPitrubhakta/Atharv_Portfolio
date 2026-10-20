@@ -13,7 +13,6 @@ import {
   ChevronRight,
   Menu,
   X,
-  Download,
   Send,
   MapPin,
   Phone,
@@ -183,7 +182,7 @@ const Portfolio: React.FC = () => {
   //     skills: [
   //       { name: "React.js", icon: <Code2 className="w-5 h-5" /> },
   //       { name: "Next.js", icon: <Code2 className="w-5 h-5" /> },
-        { name: "Nest.js", icon: <Code2 className="w-5 h-5" /> },
+  //       { name: "Nest.js", icon: <Code2 className="w-5 h-5" /> },
   //       { name: "JavaScript", icon: <Code2 className="w-5 h-5" /> },
   //       { name: "TypeScript", icon: <Code2 className="w-5 h-5" /> },
   //       { name: "HTML5 & CSS3", icon: <Palette className="w-5 h-5" /> },
